@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { ChevronDown, MailOpen } from "lucide-react";
+import { useRef, useState } from "react";
+import confetti from "canvas-confetti";
+import { ChevronDown, Heart, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Reveal } from "@/components/reveal";
@@ -7,6 +8,38 @@ import { siteContent } from "@/content/site";
 
 export function LetterSection() {
   const [isOpen, setIsOpen] = useState(false);
+  const envelopeButtonRef = useRef<HTMLButtonElement>(null);
+
+  function toggleLetter() {
+    if (!isOpen) {
+      const bounds = envelopeButtonRef.current?.getBoundingClientRect();
+      const origin = bounds
+        ? {
+            x: (bounds.left + bounds.width / 2) / window.innerWidth,
+            y: (bounds.top + bounds.height / 2) / window.innerHeight,
+          }
+        : { x: 0.5, y: 0.7 };
+
+      confetti({
+        particleCount: 48,
+        spread: 66,
+        startVelocity: 27,
+        origin,
+        colors: ["#17464a", "#6b9b91", "#d7a24a", "#e7b6ac", "#f3efe4"],
+        disableForReducedMotion: true,
+      });
+      confetti({
+        particleCount: 24,
+        spread: 100,
+        startVelocity: 18,
+        origin,
+        colors: ["#d7a24a", "#e7b6ac", "#f3efe4"],
+        disableForReducedMotion: true,
+      });
+    }
+
+    setIsOpen((open) => !open);
+  }
 
   return (
     <section id="letter" className="px-5 pb-24 pt-8 sm:px-8 sm:pb-32">
@@ -18,9 +51,9 @@ export function LetterSection() {
             </p>
             <div className="mt-3 flex items-end justify-between gap-4">
               <h2 className="font-editorial text-4xl leading-none text-ink sm:text-5xl">
-                When you’re ready.
+                A little note for you.
               </h2>
-              <MailOpen
+              <Mail
                 className="mb-1 size-7 shrink-0 text-sun"
                 aria-hidden="true"
               />
@@ -28,17 +61,37 @@ export function LetterSection() {
           </div>
           <div className="px-6 py-6 sm:px-10 sm:py-8">
             <p className="max-w-xl text-sm leading-6 text-muted-foreground">
-              There are a few words I wanted you to have all to yourself.
+              Sealed with love, and a tiny surprise when you open it.
             </p>
+            <div
+              className={`letter-envelope ${isOpen ? "is-open" : ""}`}
+              aria-hidden="true"
+            >
+              <div className="envelope-shape">
+                <div className="envelope-back" />
+                <div className="envelope-letter">
+                  <Heart className="size-5 fill-current text-sun" />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="envelope-pocket" />
+                <div className="envelope-flap" />
+                <span className="envelope-seal">
+                  <Heart className="size-5 fill-current text-paper" />
+                </span>
+              </div>
+            </div>
             <Button
+              ref={envelopeButtonRef}
               type="button"
               variant="outline"
-              className="mt-5 h-11 rounded-full border-primary/20 px-5 text-primary hover:bg-secondary"
+              className="mt-1 h-11 rounded-full border-primary/20 px-5 text-primary hover:bg-secondary"
               aria-expanded={isOpen}
               aria-controls="personal-letter"
-              onClick={() => setIsOpen((open) => !open)}
+              onClick={toggleLetter}
             >
-              {isOpen ? "Fold this note" : "Open your letter"}
+              {isOpen ? "Tuck the letter away" : "Open the envelope"}
               <ChevronDown
                 className={`ml-2 size-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
                 aria-hidden="true"
@@ -48,7 +101,7 @@ export function LetterSection() {
             <div
               id="personal-letter"
               hidden={!isOpen}
-              className="mt-7 border-t border-ink/10 pt-7"
+              className={`letter-message mt-7 border-t border-ink/10 pt-7 ${isOpen ? "is-open" : ""}`}
             >
               <p className="font-editorial text-2xl text-primary">
                 {siteContent.letter.greeting}

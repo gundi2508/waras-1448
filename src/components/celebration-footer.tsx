@@ -31,6 +31,11 @@ export function CelebrationFooter() {
         <h2 className="mt-3 font-editorial text-5xl text-paper sm:text-6xl">
           Waras Mubarak.
         </h2>
+        <div className="mt-4 flex max-w-2xl flex-col gap-2 text-sm leading-6 text-white/70">
+          {siteContent.finaleLines.map((line) => (
+            <p key={line}>{line}</p>
+          ))}
+        </div>
         <Button
           type="button"
           onClick={celebrate}

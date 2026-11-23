@@ -116,6 +116,188 @@
   transform: translateY(0);
 }
 
+.floating-decoration {
+  position: absolute;
+  bottom: -5rem;
+  opacity: 0;
+  animation: float-through 18s linear infinite;
+  will-change: transform, opacity;
+}
+
+.celebration-balloon {
+  position: relative;
+  display: block;
+  width: 1.55rem;
+  height: 2rem;
+  border-radius: 50% 50% 46% 46%;
+  box-shadow: inset -5px -5px 0 rgb(23 56 61 / 14%);
+}
+
+.celebration-balloon::before {
+  position: absolute;
+  bottom: -4px;
+  left: calc(50% - 3px);
+  border-right: 3px solid transparent;
+  border-bottom: 4px solid currentColor;
+  border-left: 3px solid transparent;
+  content: "";
+}
+
+.celebration-balloon::after {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  height: 3.25rem;
+  border-left: 1px solid currentColor;
+  content: "";
+  opacity: 0.55;
+}
+
+.letter-envelope {
+  display: grid;
+  height: 11rem;
+  max-width: 32rem;
+  margin: 1.5rem auto 1rem;
+  place-items: center;
+  perspective: 900px;
+}
+
+.envelope-shape {
+  position: relative;
+  width: min(100%, 28rem);
+  height: 9.5rem;
+  filter: drop-shadow(0 15px 18px rgb(23 56 61 / 12%));
+}
+
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(23 56 61 / 10%);
+  border-radius: 1rem;
+  background: linear-gradient(140deg, #f3e8d1, #e6d3ae);
+}
+
+.envelope-letter {
+  position: absolute;
+  z-index: 1;
+  right: 8%;
+  bottom: 10%;
+  left: 8%;
+  display: flex;
+  height: 82%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border-radius: 0.6rem 0.6rem 0.3rem 0.3rem;
+  background: #fbf9f2;
+  box-shadow: 0 3px 8px rgb(23 56 61 / 10%);
+  transition: transform 850ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateY(34%);
+}
+
+.envelope-letter span {
+  width: 42%;
+  height: 2px;
+  border-radius: 2px;
+  background: #d7d9cd;
+}
+
+.envelope-letter span:last-child {
+  width: 28%;
+}
+
+.envelope-pocket {
+  position: absolute;
+  z-index: 3;
+  inset: 30% 0 0;
+  border-radius: 0 0 1rem 1rem;
+  background: linear-gradient(145deg, #e8d8ba, #d9c49e);
+  clip-path: polygon(0 0, 50% 57%, 100% 0, 100% 100%, 0 100%);
+}
+
+.envelope-flap {
+  position: absolute;
+  z-index: 4;
+  inset: 0 0 auto;
+  height: 66%;
+  background: linear-gradient(165deg, #f5ead4, #e5d1aa);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: 50% 0;
+  transition:
+    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 700ms ease;
+}
+
+.envelope-seal {
+  position: absolute;
+  z-index: 5;
+  top: 42%;
+  left: 50%;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 3px solid #c68a3a;
+  border-radius: 50%;
+  background: #b95f56;
+  box-shadow: 0 3px 8px rgb(23 56 61 / 20%);
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 220ms ease,
+    transform 300ms ease;
+}
+
+.letter-envelope.is-open .envelope-letter {
+  transform: translateY(-28%);
+}
+
+.letter-envelope.is-open .envelope-flap {
+  z-index: 0;
+  filter: brightness(0.96);
+  transform: rotateX(180deg);
+}
+
+.letter-envelope.is-open .envelope-seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.55);
+}
+
+.letter-message.is-open {
+  animation: unfold-message 720ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes float-through {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-8deg) scale(0.85);
+  }
+
+  12%,
+  84% {
+    opacity: 0.72;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(25px, -115vh, 0) rotate(14deg) scale(1.08);
+  }
+}
+
+@keyframes unfold-message {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 80% round 0.75rem);
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 round 0.75rem);
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -133,5 +315,14 @@
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .floating-decoration {
+    animation: none;
+    opacity: 0.18;
+  }
+
+  .letter-message.is-open {
+    animation: none;
   }
 }

@@ -1,5 +1,6 @@
 import { ArrowDown, MapPin, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { FloatingCelebrations } from "@/components/floating-celebrations";
 import { heroPhoto, siteContent } from "@/content/site";
 
 export function HeroSection() {
@@ -8,6 +9,7 @@ export function HeroSection() {
       id="home"
       className="relative isolate min-h-[720px] overflow-clip bg-ink text-white sm:min-h-[780px]"
     >
+      <FloatingCelebrations />
       <div
         className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_12%_82%,rgba(107,155,145,0.28),transparent_42%),linear-gradient(115deg,#102d32_10%,#17464a_68%,#1d5352)]"
         aria-hidden="true"
@@ -55,7 +57,7 @@ export function HeroSection() {
           </a>
         </div>
 
-        <div className="relative mx-auto w-full max-w-2xl lg:ml-auto">
+        <div className="relative z-10 mx-auto w-full max-w-2xl lg:ml-auto">
           <div className="absolute -inset-4 rotate-[-3deg] rounded-[2rem] border border-white/15 bg-white/5 sm:-inset-5" />
           <figure className="relative overflow-hidden rounded-[1.5rem] border border-white/20 bg-[#24494a] p-2 shadow-2xl shadow-black/25 sm:rounded-[2rem] sm:p-3">
             <img
@@ -72,7 +74,7 @@ export function HeroSection() {
             )}
           </figure>
           <div className="absolute -bottom-8 -left-2 hidden -rotate-6 rounded-xl bg-paper px-5 py-4 text-ink shadow-xl sm:block lg:-left-10">
-            <p className="font-editorial text-2xl">Our kind of detour</p>
+            <p className="font-editorial text-2xl">Love you ∞</p>
             <p className="mt-1 text-[0.65rem] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
               Keep this one close
             </p>
