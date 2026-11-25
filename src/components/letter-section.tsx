@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import confetti from "canvas-confetti";
-import { ChevronDown, Heart, Mail } from "lucide-react";
+import { Heart, Mail, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Reveal } from "@/components/reveal";
@@ -8,7 +8,9 @@ import { siteContent } from "@/content/site";
 
 export function LetterSection() {
   const [isOpen, setIsOpen] = useState(false);
+  const [celebrated, setCelebrated] = useState(false);
   const envelopeButtonRef = useRef<HTMLButtonElement>(null);
+  const confettiButtonRef = useRef<HTMLButtonElement>(null);
 
   function toggleLetter() {
     if (!isOpen) {
@@ -41,6 +43,26 @@ export function LetterSection() {
     setIsOpen((open) => !open);
   }
 
+  function celebrateLetter() {
+    const bounds = confettiButtonRef.current?.getBoundingClientRect();
+    const origin = bounds
+      ? {
+          x: (bounds.left + bounds.width / 2) / window.innerWidth,
+          y: (bounds.top + bounds.height / 2) / window.innerHeight,
+        }
+      : { x: 0.5, y: 0.72 };
+
+    confetti({
+      particleCount: 85,
+      spread: 64,
+      startVelocity: 34,
+      origin,
+      colors: ["#17464a", "#6b9b91", "#d7a24a", "#f3efe4"],
+      disableForReducedMotion: true,
+    });
+    setCelebrated(true);
+  }
+
   return (
     <section id="letter" className="px-5 pb-24 pt-8 sm:px-8 sm:pb-32">
       <Reveal className="mx-auto max-w-3xl">
@@ -65,38 +87,30 @@ export function LetterSection() {
             </p>
             <div
               className={`letter-envelope ${isOpen ? "is-open" : ""}`}
-              aria-hidden="true"
             >
               <div className="envelope-shape">
-                <div className="envelope-back" />
-                <div className="envelope-letter">
+                <div className="envelope-back" aria-hidden="true" />
+                <div className="envelope-letter" aria-hidden="true">
                   <Heart className="size-5 fill-current text-sun" />
                   <span />
                   <span />
                   <span />
                 </div>
-                <div className="envelope-pocket" />
-                <div className="envelope-flap" />
-                <span className="envelope-seal">
+                <div className="envelope-pocket" aria-hidden="true" />
+                <div className="envelope-flap" aria-hidden="true" />
+                <button
+                  ref={envelopeButtonRef}
+                  type="button"
+                  className="envelope-seal"
+                  aria-label={isOpen ? "Tuck the letter away" : "Open the envelope"}
+                  aria-expanded={isOpen}
+                  aria-controls="personal-letter"
+                  onClick={toggleLetter}
+                >
                   <Heart className="size-5 fill-current text-paper" />
-                </span>
+                </button>
               </div>
             </div>
-            <Button
-              ref={envelopeButtonRef}
-              type="button"
-              variant="outline"
-              className="mt-1 h-11 rounded-full border-primary/20 px-5 text-primary hover:bg-secondary"
-              aria-expanded={isOpen}
-              aria-controls="personal-letter"
-              onClick={toggleLetter}
-            >
-              {isOpen ? "Tuck the letter away" : "Open the envelope"}
-              <ChevronDown
-                className={`ml-2 size-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
-                aria-hidden="true"
-              />
-            </Button>
 
             <div
               id="personal-letter"
@@ -114,6 +128,22 @@ export function LetterSection() {
               <p className="mt-7 text-sm text-muted-foreground">With all my love,</p>
               <p className="mt-1 font-editorial text-2xl text-primary">
                 {siteContent.letter.signOff}
+              </p>
+              <div className="mt-7 flex justify-end">
+                <Button
+                  ref={confettiButtonRef}
+                  type="button"
+                  onClick={celebrateLetter}
+                  className="h-11 rounded-full bg-sun px-5 text-ink hover:bg-[#e2b45f]"
+                >
+                  {celebrated
+                    ? "A little more joy, just for you"
+                    : "Send a little confetti"}
+                  <Sparkles className="ml-2 size-4" aria-hidden="true" />
+                </Button>
+              </div>
+              <p className="sr-only" aria-live="polite">
+                {celebrated ? "A little more joy, just for you." : ""}
               </p>
             </div>
           </div>

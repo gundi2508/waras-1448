@@ -43,15 +43,15 @@ export const siteContent = {
   heroMessage:
     "For every little adventure, and every chance to make you roll your eyes, I would choose you again.",
   letter: {
-    greeting: "Dear Sakina,",
+    greeting: "My Sweetheart ♡,",
     paragraphs: [
-      "I still remember looking forward to the day when good mornings wouldn't have to travel through a screen and missing you wouldn't be part of the day. Now I get to call you my wife, and my favourite thing is sharing the little ordinary moments I used to dream about.",
+      "Now I get to call you my wife, and my favourite thing is sharing the little ordinary moments I used to dream about.",
       "You are still my biggest support and my safest place. Thank you for making ordinary days feel magical, for being my best friend, and for making home feel like you.",
-      "Some of my happiest moments are the simple ones: settling in beside you to watch F.R.I.E.N.D.S, laughing over a familiar episode, and getting a little more time together.",
-      "And just so you know, I fully plan to keep irritating you, teasing you, and testing the limits of that famous anger every single day. I'll do it all over again tomorrow, too, because your eye-rolls and dramatic reactions are some of my favourite things.",
+      "Some of my happiest moments are the simple ones: settling in beside you to watch F.R.I.E.N.D.S, laughing together, and getting a little more time together.",
+      "And just so you know, I fully plan to keep irritating you, teasing you, and testing the limits of that anger every single day. I'll do it all over again tomorrow, too, because your eye-rolls and dramatic reactions are some of my favourite things.",
       "May every dream you have come true, may your smile never fade, and may we keep choosing each other through every ordinary day and every new adventure.",
     ],
-    signOff: "Forever yours,",
+    signOff: "Forever yours ♡,"
   },
   finaleLines: [
     "Thank you for making ordinary days feel magical.",
